@@ -1,27 +1,62 @@
 let boxes = document.querySelectorAll('#box')
 let gameboard = {
+    userChoice : "undefined",
     rows : 3,
+    toClear : [],
     col : 3,
     takenList : [],
     list : ['b10','b11','b12',
             'b20','b21','b22',
             'b30','b31','b32'
-],
-    botTargets : []
+],  
+    turnPermOff : false,
+    botTargets : [],
+    winCheck : function () {
 
+    },
+    clear: (blockArr) => {
+        for(let i = 0; i < blockArr.length; i++){
+            document.querySelector('.'+blockArr[i]).removeChild(document.querySelector('.'+"c"+blockArr[i][1] + "" + blockArr[i][2]))
+         
+        }
+        blockArr.length = 0;
+    }
+ }
+document.querySelector('#choseSide').addEventListener('click', () => {
+    if(document.querySelector('#choseSide').value == 'circle'){
+        gameboard.userChoice = 'circle'
+        if(gameboard.turnPermOff == false){
+        botPlay()
+        gameboard.turnPermOff = true;
+        }
+    } else {
+        gameboard.userChoice = 'cross'
+        if(gameboard.toClear.length < 2){
+        let clearNode = document.querySelector('.'+gameboard.toClear[0])
+        document.querySelector("."+gameboard.toClear[0]).removeChild(document.querySelector('img'))
+        console.log(clearNode)
+        gameboard.toClear.shift()
+        } else {
+            gameboard.clear(gameboard.toClear)
+        }
+        gameboard.turnPermOff = false;
+    }
+})
 
-}
 let playerturn = false;
 boxes.forEach(box => {
     box.addEventListener('click', () => {
         if(document.querySelector('#choseSide').value == 'circle'){
-            box.innerHTML = `<img src="circle.png" id="icons">`
+            box.innerHTML = `<img src="circle.png" id="icons" class ="${"c"+box.className[1] + "" +box.className[2]}">`
             gameboard.takenList.push(box.className)
             botPlay()
+            gameboard.toClear.push(box.className)
         } else {
-            box.innerHTML = `<img src="Cross.png" id="icons">`
+            box.innerHTML = `<img src="cross.png" id="icons" class = "${"c"+box.className[1] + "" +box.className[2]}">`
             gameboard.takenList.push(box.className)
             botPlay()
+            gameboard.toClear.push(box.className)
+
         }
         box.style.padding = '34px'
     })
@@ -41,19 +76,19 @@ function botPlay(){
         continue
     } else {
         console.log(botTarget)
-        gameboard.botTargets.push(botTarget)
             if(document.querySelector('#choseSide').value == 'circle'){
-                document.querySelector('.'+botTarget).innerHTML = `<img src="Cross.png" id="icons">`
+                document.querySelector('.'+botTarget).innerHTML = `<img src="cross.png" id="icons" class ="${"c"+botTarget[1] + "" + botTarget[2]}">`
                 gameboard.botTargets.push(botTarget)
+                gameboard.toClear.push(botTarget)
             } else {
-                document.querySelector('.'+botTarget).innerHTML = `<img src="circle.png" id="icons">`
+                document.querySelector('.'+botTarget).innerHTML = `<img src="circle.png" id="icons" class ="${"c"+botTarget[1] + "" + botTarget[2]}">`
                 gameboard.botTargets.push(botTarget)
+                gameboard.toClear.push(botTarget)
             }
         
         break
 
 }
+}
 return false;
-
-    }
 }
