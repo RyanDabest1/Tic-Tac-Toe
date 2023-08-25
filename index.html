@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic-tac-toe</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;0,500;1,400;1,700&family=Lexend+Deca:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="header"><h1>Tic Tac Toe</h1></div>
+    <div class="control-Section">
+        <div class="choices">
+            <select name="difficulties" id="difficulties">
+                <option value="easy">Easy mode</option>
+                <option value="medium">Medium mode</option>
+                <option value="hard">Hard mode</option>
+            </select>
+            <select name="CircleOrCross" id="choseSide">
+                <option value="circle">Circle</option>
+                <option value="cross">Cross</option>
+            </select>
+        </div>
+    <button>Restart</button>
+
+    </div>
+    <div class="gameBoard">
+        <div class="b10" id="box"></div>
+        <div class="b11" id="box"></div>
+        <div class="b12" id="box"></div>
+        <div class="b20" id="box"></div>
+        <div class="b21" id="box"></div>
+        <div class="b22" id="box"></div>
+        <div class="b30" id="box"></div>
+        <div class="b31" id="box"></div>
+        <div class="b32" id="box"></div>
+    </div>
+    
+    <script src="./main.js"></script>
+</body>
+</html>
