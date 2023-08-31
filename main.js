@@ -1,4 +1,5 @@
 let boxes = document.querySelectorAll('#box')
+let clearBtn = document.querySelector('.clear')
 let gameboard = {
     userChoice : "undefined",
     rows : 3,
@@ -17,11 +18,14 @@ let gameboard = {
     clear: (blockArr) => {
         for(let i = 0; i < blockArr.length; i++){
             document.querySelector('.'+blockArr[i]).removeChild(document.querySelector('.'+"c"+blockArr[i][1] + "" + blockArr[i][2]))
-         
         }
         blockArr.length = 0;
     }
  }
+clearBtn.addEventListener('click', () => {
+    gameboard.clear(gameboard.toClear)
+})
+
 document.querySelector('#choseSide').addEventListener('click', () => {
     if(document.querySelector('#choseSide').value == 'circle'){
         gameboard.userChoice = 'circle'
