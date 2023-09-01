@@ -1,6 +1,8 @@
 let boxes = document.querySelectorAll('#box')
 let clearBtn = document.querySelector('.clear')
-let choiceOpt = document.querySelectorAll('.choice')
+let choiceOpt = document.querySelector('#choseSide')
+let choiceDiff = document.querySelector('#difficulties')
+
 let gameboard = {
     userChoice : "undefined",
     rows : 3,
@@ -14,6 +16,9 @@ let gameboard = {
     turnPermOff : false,
     botTargets : [],
     winCheck : function () {
+        for(let i = 0; i < gameboard.takenList.length; i++){
+            console.log(gameboard.takenList[i][1])
+        }
 
     },
     clear: (blockArr) => {
@@ -23,19 +28,55 @@ let gameboard = {
         blockArr.length = 0;
         gameboard.botTargets.length = 0;
         gameboard.takenList.length = 0;
-    }
+    },
+    gameStarted : false,
+    difficulty : 'undefined'
  }
+ window.onload = getUserChoice()
+ window.onload = getDifficulty()
+ choiceOpt.addEventListener('change', () => {
+    if(choiceOpt.value == 'circle'){
+        gameboard.clear(gameboard.toClear)
+        gameboard.userChoice = 'circle'
+        botPlay()
+    } else {
+        gameboard.userChoice = 'cross'
+        gameboard.clear(gameboard.toClear)
+    }
+ })
+ choiceDiff.addEventListener('change', ()=> {
+    if(choiceDiff.value == 'easy'){
+        gameboard.difficulty = 'easy'
+    } else if(choiceDiff.value = 'medium'){
+        gameboard.difficulty = 'medium'
+    } else {
+        gameboard.difficulty = 'hard'
+    }
+ })
+
 clearBtn.addEventListener('click', () => {
     gameboard.clear(gameboard.toClear)
+    getUserChoice()
 })
 
-document.querySelector('#choseSide').addEventListener('click', () => {
+function getUserChoice(){
     if(document.querySelector('#choseSide').value == 'circle'){
         gameboard.userChoice = 'circle'
+        botPlay()
     } else {
         gameboard.userChoice = 'cross'
     }
-})
+}
+function getDifficulty(){
+    if(document.querySelector('#difficulties').value == 'easy'){
+        gameboard.difficulty = 'easy'
+
+    } else if (document.querySelector('#difficulties').value == 'medium'){
+        gameboard.difficulty = 'medium'
+    } else [
+        gameboard.difficulty = 'hard'
+    ]
+}
 
 let playerturn = false;
 boxes.forEach(box => {
@@ -43,11 +84,13 @@ boxes.forEach(box => {
         if(document.querySelector('#choseSide').value == 'circle'){
             box.innerHTML = `<img src="circle.png" id="icons" class ="${"c"+box.className[1] + "" +box.className[2]}">`
             gameboard.takenList.push(box.className)
+            gameboard.winCheck()
             botPlay()
             gameboard.toClear.push(box.className)
         } else {
             box.innerHTML = `<img src="cross.png" id="icons" class = "${"c"+box.className[1] + "" +box.className[2]}">`
             gameboard.takenList.push(box.className)
+            gameboard.winCheck()
             botPlay()
             gameboard.toClear.push(box.className)
 
@@ -69,15 +112,18 @@ function botPlay(){
     } else if(gameboard.botTargets.find(elm => elm == botTarget)){
         continue
     } else {
-        console.log(botTarget)
             if(document.querySelector('#choseSide').value == 'circle'){
                 document.querySelector('.'+botTarget).innerHTML = `<img src="cross.png" id="icons" class ="${"c"+botTarget[1] + "" + botTarget[2]}">`
                 gameboard.botTargets.push(botTarget)
                 gameboard.toClear.push(botTarget)
+                gameboard.winCheck()
+
             } else {
                 document.querySelector('.'+botTarget).innerHTML = `<img src="circle.png" id="icons" class ="${"c"+botTarget[1] + "" + botTarget[2]}">`
                 gameboard.botTargets.push(botTarget)
                 gameboard.toClear.push(botTarget)
+                gameboard.winCheck()
+
             }
         
         break
