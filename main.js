@@ -1,5 +1,6 @@
 let boxes = document.querySelectorAll('#box')
 let clearBtn = document.querySelector('.clear')
+let choiceOpt = document.querySelectorAll('.choice')
 let gameboard = {
     userChoice : "undefined",
     rows : 3,
@@ -20,6 +21,8 @@ let gameboard = {
             document.querySelector('.'+blockArr[i]).removeChild(document.querySelector('.'+"c"+blockArr[i][1] + "" + blockArr[i][2]))
         }
         blockArr.length = 0;
+        gameboard.botTargets.length = 0;
+        gameboard.takenList.length = 0;
     }
  }
 clearBtn.addEventListener('click', () => {
@@ -29,21 +32,8 @@ clearBtn.addEventListener('click', () => {
 document.querySelector('#choseSide').addEventListener('click', () => {
     if(document.querySelector('#choseSide').value == 'circle'){
         gameboard.userChoice = 'circle'
-        if(gameboard.turnPermOff == false){
-        botPlay()
-        gameboard.turnPermOff = true;
-        }
     } else {
         gameboard.userChoice = 'cross'
-        if(gameboard.toClear.length < 2){
-        let clearNode = document.querySelector('.'+gameboard.toClear[0])
-        document.querySelector("."+gameboard.toClear[0]).removeChild(document.querySelector('img'))
-        console.log(clearNode)
-        gameboard.toClear.shift()
-        } else {
-            gameboard.clear(gameboard.toClear)
-        }
-        gameboard.turnPermOff = false;
     }
 })
 
