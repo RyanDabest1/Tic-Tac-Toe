@@ -13,13 +13,31 @@ let gameboard = {
             'b20','b21','b22',
             'b30','b31','b32'
 ],  
+    record : [],
+    wins : [
+        ['1', '2', '3'],
+        ['1', '1', '1'],
+        ['2', '2', '2'],
+        ['3', '3', '3'],
+        ['3', '2', '1'],
+    ],
+    
+
     turnPermOff : false,
     botTargets : [],
-    winCheck : function () {
-        for(let i = 0; i < gameboard.takenList.length; i++){
-            console.log(gameboard.takenList[i][1])
-        }
-
+    winCheck : function (value) {
+        gameboard.record.push(value[1])
+        for(let i = 0; i < gameboard.wins.length; i++){
+            for(let x = 0; x < gameboard.wins[i].length; x++){
+                if(gameboard.record.includes(gameboard.wins[i][x])){
+                    console.log('You win!')
+                  } else {
+                    console.log(false)
+                  }            
+                }
+         }
+          
+    
     },
     clear: (blockArr) => {
         for(let i = 0; i < blockArr.length; i++){
@@ -28,6 +46,7 @@ let gameboard = {
         blockArr.length = 0;
         gameboard.botTargets.length = 0;
         gameboard.takenList.length = 0;
+        gameboard.record.length = 0;
     },
     gameStarted : false,
     difficulty : 'undefined'
@@ -84,13 +103,13 @@ boxes.forEach(box => {
         if(document.querySelector('#choseSide').value == 'circle'){
             box.innerHTML = `<img src="circle.png" id="icons" class ="${"c"+box.className[1] + "" +box.className[2]}">`
             gameboard.takenList.push(box.className)
-            gameboard.winCheck()
+            gameboard.winCheck(box.className)
             botPlay()
             gameboard.toClear.push(box.className)
         } else {
             box.innerHTML = `<img src="cross.png" id="icons" class = "${"c"+box.className[1] + "" +box.className[2]}">`
             gameboard.takenList.push(box.className)
-            gameboard.winCheck()
+            gameboard.winCheck(box.className)
             botPlay()
             gameboard.toClear.push(box.className)
 
@@ -116,13 +135,10 @@ function botPlay(){
                 document.querySelector('.'+botTarget).innerHTML = `<img src="cross.png" id="icons" class ="${"c"+botTarget[1] + "" + botTarget[2]}">`
                 gameboard.botTargets.push(botTarget)
                 gameboard.toClear.push(botTarget)
-                gameboard.winCheck()
-
             } else {
                 document.querySelector('.'+botTarget).innerHTML = `<img src="circle.png" id="icons" class ="${"c"+botTarget[1] + "" + botTarget[2]}">`
                 gameboard.botTargets.push(botTarget)
                 gameboard.toClear.push(botTarget)
-                gameboard.winCheck()
 
             }
         
