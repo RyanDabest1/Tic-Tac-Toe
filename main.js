@@ -139,7 +139,7 @@ function botPlay(){
         continue
     } else {
             if(document.querySelector('#choseSide').value == 'circle'){
-                document.querySelector('.'+botTarget).innerHTML = `<img src="Cross.png" id="icons" class ="${"c"+botTarget[1] + "" + botTarget[2]}">`
+                document.querySelector('.'+botTarget).innerHTML = `<img src="cross.png" id="icons" class ="${"c"+botTarget[1] + "" + botTarget[2]}">`
                 gameboard.botTargets.push(botTarget)
                 gameboard.toClear.push(botTarget)
             } else {
