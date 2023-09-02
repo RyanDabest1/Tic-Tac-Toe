@@ -113,7 +113,7 @@ boxes.forEach(box => {
                 botPlay()
                 gameboard.toClear.push(box.className)
             } else {
-            box.innerHTML = `<img src="cross.png" id="icons" class = "${"c"+box.className[1] + "" +box.className[2]}">`
+            box.innerHTML = `<img src="Cross.png" id="icons" class = "${"c"+box.className[1] + "" +box.className[2]}">`
             gameboard.takenList.push(box.className)
             gameboard.winCheck(box.className)
             botPlay()
@@ -139,11 +139,11 @@ function botPlay(){
         continue
     } else {
             if(document.querySelector('#choseSide').value == 'circle'){
-                document.querySelector('.'+botTarget).innerHTML = `<img src="cross.png" id="icons" class ="${"c"+botTarget[1] + "" + botTarget[2]}">`
+                document.querySelector('.'+botTarget).innerHTML = `<img src="Cross.png" id="icons" class ="${"c"+botTarget[1] + "" + botTarget[2]}">`
                 gameboard.botTargets.push(botTarget)
                 gameboard.toClear.push(botTarget)
             } else {
-                document.querySelector('.'+botTarget).innerHTML = `<img src="Circle.png" id="icons" class ="${"c"+botTarget[1] + "" + botTarget[2]}">`
+                document.querySelector('.'+botTarget).innerHTML = `<img src="circle.png" id="icons" class ="${"c"+botTarget[1] + "" + botTarget[2]}">`
                 gameboard.botTargets.push(botTarget)
                 gameboard.toClear.push(botTarget)
 
