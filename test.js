@@ -1,5 +1,5 @@
 let array1 = [[1, 2, 3],[1, 1, 1],[2, 2, 2],[3, 3, 3],[3, 2, 1],]
-let array2 = [1, 0, 10, 3, 2, 5]
+let array2 = [1, 3, 5, 6, 3, 2]
 
 function check(){
     for(let i = 0; i < array1.length; i++){

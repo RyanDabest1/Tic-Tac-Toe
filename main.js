@@ -100,20 +100,27 @@ function getDifficulty(){
 let playerturn = false;
 boxes.forEach(box => {
     box.addEventListener('click', () => {
-        if(document.querySelector('#choseSide').value == 'circle'){
-            box.innerHTML = `<img src="circle.png" id="icons" class ="${"c"+box.className[1] + "" +box.className[2]}">`
-            gameboard.takenList.push(box.className)
-            gameboard.winCheck(box.className)
-            botPlay()
-            gameboard.toClear.push(box.className)
-        } else {
+            if(gameboard.takenList.find(elm => elm == box.className)){
+              return false;
+            } else {
+            if(gameboard.botTargets.find(elm => elm == box.className)){
+                return false
+            } else {
+            if(document.querySelector('#choseSide').value == 'circle'){
+                box.innerHTML = `<img src="circle.png" id="icons" class ="${"c"+box.className[1] + "" +box.className[2]}">`
+                gameboard.takenList.push(box.className)
+                gameboard.winCheck(box.className)
+                botPlay()
+                gameboard.toClear.push(box.className)
+            } else {
             box.innerHTML = `<img src="cross.png" id="icons" class = "${"c"+box.className[1] + "" +box.className[2]}">`
             gameboard.takenList.push(box.className)
             gameboard.winCheck(box.className)
             botPlay()
             gameboard.toClear.push(box.className)
-
-        }
+            }
+            }
+            }
         box.style.padding = '34px'
     })
 })
