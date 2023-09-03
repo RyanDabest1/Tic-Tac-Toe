@@ -2,7 +2,7 @@ let boxes = document.querySelectorAll('#box')
 let clearBtn = document.querySelector('.clear')
 let choiceOpt = document.querySelector('#choseSide')
 let choiceDiff = document.querySelector('#difficulties')
-
+let matchStatus = document.querySelector('.matchStatus')
 let gameboard = {
     userChoice : "undefined",
     rows : 3,
@@ -18,37 +18,31 @@ let gameboard = {
         '','','',
         '','',''
     ],
+    botHits : [
+        '','','',
+        '','','',
+        '','',''
+    ],
     turnPermOff : false,
     botTargets : [],
-    winCheck : function () {
-        if(gameboard.hits[0] == 'hit' && gameboard.hits[1] == 'hit' && gameboard.hits[2] == 'hit'){
-            alert('YOU WIN!')
+    winCheck : function (person) {
+        if(person[0] == 'hit' && person[1] == 'hit' && person[2] == 'hit'){
             return true;
-        } else if (gameboard.hits[0] == 'hit' && gameboard.hits[3] == 'hit' && gameboard.hits[6] == 'hit'){
-            alert("YOU WIN!")
+        } else if (person[0] == 'hit' && person[3] == 'hit' && person[6] == 'hit'){
             return true;
-        } else if (gameboard.hits[6] == 'hit' && gameboard.hits[7] == 'hit' && gameboard.hits[8] == 'hit'){
-            alert("YOU WIN!")
+        } else if (person[6] == 'hit' && person[7] == 'hit' && person[8] == 'hit'){
             return true;
-        } else if (gameboard.hits[6] == 'hit' && gameboard.hits[4] == 'hit' && gameboard.hits[2] == 'hit'){
-            alert("YOU WIN!")
+        } else if (person[6] == 'hit' && person[4] == 'hit' && person[2] == 'hit'){
             return true;
-        } else if (gameboard.hits[1] == 'hit' && gameboard.hits[4] == 'hit' && gameboard.hits[7] == 'hit'){
-            alert("YOU WIN!")
+        } else if (person[1] == 'hit' && person[4] == 'hit' && person[7] == 'hit'){
             return true;
-        } else if (gameboard.hits[2] == 'hit' && gameboard.hits[5] == 'hit' && gameboard.hits[8] == 'hit'){
-            alert("YOU WIN!")
+        } else if (person[2] == 'hit' && person[5] == 'hit' && person[8] == 'hit'){
             return true;
-        } else if (gameboard.hits[3] == 'hit' && gameboard.hits[4] == 'hit' && gameboard.hits[5] == 'hit'){
-            alert("YOU WIN!")
+        } else if (person[3] == 'hit' && person[4] == 'hit' && person[5] == 'hit'){
             return true;
-        } else if (gameboard.hits[0] == 'hit' && gameboard.hits[4] == 'hit' && gameboard.hits[8] == 'hit'){
-            alert("YOU WIN!")
+        } else if (person[0] == 'hit' && person[4] == 'hit' && person[8] == 'hit'){
             return true;
         }
-        
-        
-    
     },
     clear: (blockArr) => {
         for(let i = 0; i < blockArr.length; i++){
@@ -58,13 +52,15 @@ let gameboard = {
         gameboard.botTargets.length = 0;
         gameboard.takenList.length = 0;
         gameboard.hits.length = 0;
+        gameboard.botHits.length = 0;
+        matchStatus.innerHTML = 'Match in Progress'
     },
     gameStarted : false,
     difficulty : 'undefined',
-    addHit : function(value){
+    addHit : function(value, target){
         var index = gameboard.list.indexOf(value)
         if(index >= 0){
-            gameboard.hits[index] = 'hit'
+            target[index] = 'hit'
         }
         return false;
     }
@@ -127,16 +123,17 @@ boxes.forEach(box => {
             if(document.querySelector('#choseSide').value == 'circle'){
                 box.innerHTML = `<img src="circle.png" id="icons" class ="${"c"+box.className[1] + "" +box.className[2]}">`
                 gameboard.takenList.push(box.className)
-                gameboard.addHit(box.className)
-                if(gameboard.winCheck() !== true){botPlay()}
+                gameboard.addHit(box.className, gameboard.hits)
+                if(gameboard.winCheck(gameboard.hits) !== true){botPlay()}
                 gameboard.toClear.push(box.className)
+                if(gameboard.winCheck(gameboard.hits)){matchStatus.innerHTML = "You Won GGs"}
             } else {
             box.innerHTML = `<img src="Cross.png" id="icons" class = "${"c"+box.className[1] + "" +box.className[2]}">`
             gameboard.takenList.push(box.className)
-            gameboard.addHit(box.className)
-            if(gameboard.winCheck() !== true){botPlay()}
-            botPlay()
+            gameboard.addHit(box.className, gameboard.hits)
+            if(gameboard.winCheck(gameboard.hits) !== true){botPlay()}
             gameboard.toClear.push(box.className)
+            if(gameboard.winCheck(gameboard.hits)){matchStatus.innerHTML = "You Won GGs"}
             }
             }
             }
@@ -147,7 +144,6 @@ function generate(){
     let row = Math.floor(Math.random()* (4 - 1) + 1)
     let col = Math.floor(Math.random()* 3)
     return "b" + row + "" + col;
-
 }
 function botPlay(){
     for(let i = 0; i < gameboard.list.length; i++){
@@ -161,15 +157,20 @@ function botPlay(){
                 document.querySelector('.'+botTarget).innerHTML = `<img src="Cross.png" id="icons" class ="${"c"+botTarget[1] + "" + botTarget[2]}">`
                 gameboard.botTargets.push(botTarget)
                 gameboard.toClear.push(botTarget)
+                gameboard.addHit(botTarget, gameboard.botHits)
+                if(gameboard.winCheck(gameboard.botHits)){matchStatus.innerHTML = "The Bot Won! Well played"}
+
             } else {
                 document.querySelector('.'+botTarget).innerHTML = `<img src="circle.png" id="icons" class ="${"c"+botTarget[1] + "" + botTarget[2]}">`
                 gameboard.botTargets.push(botTarget)
                 gameboard.toClear.push(botTarget)
+                gameboard.addHit(botTarget, gameboard.botHits)
+                if(gameboard.winCheck(gameboard.botHits)){matchStatus.innerHTML = "The Bot Won! Well played"}
+
 
             }
         
         break
-
 }
 }
 return false;
