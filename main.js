@@ -27,20 +27,28 @@ let gameboard = {
     botTargets : [],
     winCheck : function (person) {
         if(person[0] == 'hit' && person[1] == 'hit' && person[2] == 'hit'){
+            gameboard.gameStarted = false;
             return true;
         } else if (person[0] == 'hit' && person[3] == 'hit' && person[6] == 'hit'){
+            gameboard.gameStarted = false;
             return true;
         } else if (person[6] == 'hit' && person[7] == 'hit' && person[8] == 'hit'){
+            gameboard.gameStarted = false;
             return true;
         } else if (person[6] == 'hit' && person[4] == 'hit' && person[2] == 'hit'){
+            gameboard.gameStarted = false;
             return true;
         } else if (person[1] == 'hit' && person[4] == 'hit' && person[7] == 'hit'){
+            gameboard.gameStarted = false;
             return true;
         } else if (person[2] == 'hit' && person[5] == 'hit' && person[8] == 'hit'){
+            gameboard.gameStarted = false;
             return true;
         } else if (person[3] == 'hit' && person[4] == 'hit' && person[5] == 'hit'){
+            gameboard.gameStarted = false;
             return true;
         } else if (person[0] == 'hit' && person[4] == 'hit' && person[8] == 'hit'){
+            gameboard.gameStarted = false;
             return true;
         }
     },
@@ -54,8 +62,9 @@ let gameboard = {
         gameboard.hits.length = 0;
         gameboard.botHits.length = 0;
         matchStatus.innerHTML = 'Match in Progress'
+        gameboard.gameStarted = true;
     },
-    gameStarted : false,
+    gameStarted : true,
     difficulty : 'undefined',
     addHit : function(value, target){
         var index = gameboard.list.indexOf(value)
@@ -114,6 +123,7 @@ function getDifficulty(){
 let playerturn = false;
 boxes.forEach(box => {
     box.addEventListener('click', () => {
+            if(gameboard.gameStarted == true){
             if(gameboard.takenList.find(elm => elm == box.className)){
               return false;
             } else {
@@ -137,7 +147,8 @@ boxes.forEach(box => {
             }
             }
             }
-        box.style.padding = '34px'
+            box.style.padding = '30px'
+        }
     })
 })
 function generate(){
