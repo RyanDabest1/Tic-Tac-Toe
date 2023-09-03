@@ -13,30 +13,41 @@ let gameboard = {
             'b20','b21','b22',
             'b30','b31','b32'
 ],  
-    record : [],
-    wins : [
-        ['1', '2', '3'],
-        ['1', '1', '1'],
-        ['2', '2', '2'],
-        ['3', '3', '3'],
-        ['3', '2', '1'],
+    hits :[
+        '','','',
+        '','','',
+        '','',''
     ],
-    
-
     turnPermOff : false,
     botTargets : [],
-    winCheck : function (value) {
-        gameboard.record.push(value[1])
-        for(let i = 0; i < gameboard.wins.length; i++){
-            for(let x = 0; x < gameboard.wins[i].length; x++){
-                if(gameboard.record.includes(gameboard.wins[i][x])){
-                    console.log('You win!')
-                  } else {
-                    console.log(false)
-                  }            
-                }
-         }
-          
+    winCheck : function () {
+        if(gameboard.hits[0] == 'hit' && gameboard.hits[1] == 'hit' && gameboard.hits[2] == 'hit'){
+            alert('YOU WIN!')
+            return true;
+        } else if (gameboard.hits[0] == 'hit' && gameboard.hits[3] == 'hit' && gameboard.hits[6] == 'hit'){
+            alert("YOU WIN!")
+            return true;
+        } else if (gameboard.hits[6] == 'hit' && gameboard.hits[7] == 'hit' && gameboard.hits[8] == 'hit'){
+            alert("YOU WIN!")
+            return true;
+        } else if (gameboard.hits[6] == 'hit' && gameboard.hits[4] == 'hit' && gameboard.hits[2] == 'hit'){
+            alert("YOU WIN!")
+            return true;
+        } else if (gameboard.hits[1] == 'hit' && gameboard.hits[4] == 'hit' && gameboard.hits[7] == 'hit'){
+            alert("YOU WIN!")
+            return true;
+        } else if (gameboard.hits[2] == 'hit' && gameboard.hits[5] == 'hit' && gameboard.hits[8] == 'hit'){
+            alert("YOU WIN!")
+            return true;
+        } else if (gameboard.hits[3] == 'hit' && gameboard.hits[4] == 'hit' && gameboard.hits[5] == 'hit'){
+            alert("YOU WIN!")
+            return true;
+        } else if (gameboard.hits[0] == 'hit' && gameboard.hits[4] == 'hit' && gameboard.hits[8] == 'hit'){
+            alert("YOU WIN!")
+            return true;
+        }
+        
+        
     
     },
     clear: (blockArr) => {
@@ -46,10 +57,17 @@ let gameboard = {
         blockArr.length = 0;
         gameboard.botTargets.length = 0;
         gameboard.takenList.length = 0;
-        gameboard.record.length = 0;
+        gameboard.hits.length = 0;
     },
     gameStarted : false,
-    difficulty : 'undefined'
+    difficulty : 'undefined',
+    addHit : function(value){
+        var index = gameboard.list.indexOf(value)
+        if(index >= 0){
+            gameboard.hits[index] = 'hit'
+        }
+        return false;
+    }
  }
  window.onload = getUserChoice()
  window.onload = getDifficulty()
@@ -109,13 +127,14 @@ boxes.forEach(box => {
             if(document.querySelector('#choseSide').value == 'circle'){
                 box.innerHTML = `<img src="circle.png" id="icons" class ="${"c"+box.className[1] + "" +box.className[2]}">`
                 gameboard.takenList.push(box.className)
-                gameboard.winCheck(box.className)
-                botPlay()
+                gameboard.addHit(box.className)
+                if(gameboard.winCheck() !== true){botPlay()}
                 gameboard.toClear.push(box.className)
             } else {
             box.innerHTML = `<img src="Cross.png" id="icons" class = "${"c"+box.className[1] + "" +box.className[2]}">`
             gameboard.takenList.push(box.className)
-            gameboard.winCheck(box.className)
+            gameboard.addHit(box.className)
+            if(gameboard.winCheck() !== true){botPlay()}
             botPlay()
             gameboard.toClear.push(box.className)
             }
