@@ -16,6 +16,7 @@ padding: 10px;
 display: flex;
 justify-content: space-between;
 border-radius: 5px;
+box-sizing: border-box;
 }
 .gameBoard{
     display: grid;
@@ -48,6 +49,10 @@ border-radius: 5px;
     transition: all 1s ease-in;
     animation: showIcon 1s;
 }
+.choices{
+    display: flex;
+    gap : 10px;
+}
 @keyframes showIcon {
     from{
         opacity: 0;
@@ -57,6 +62,37 @@ border-radius: 5px;
     }
     
 }
-.matchStatus{
-    margin-right: 105px
+
+@media screen and (max-width:983px) {
+    .control-Section{
+        width: 84%
+    }
+    .gameBoard{
+    margin-top: 6%;
+    margin-left: 17%;
+    margin-right: 20%;
+    }
+    
+}
+@media screen and (max-width: 627px){
+    .control-Section{
+        width: 100%;
+    }
+}
+@media screen and (max-width: 505px){
+    .matchProgress{
+        margin-left: 10px;
+
+    }
+}
+@media screen and (max-width: 390px) {
+    .gameBoard{
+        margin-top: 6%;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .control-Section{
+        font-size: 13px;
+    }
+    
 }
